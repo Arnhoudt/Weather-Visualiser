@@ -32,7 +32,6 @@
     }
 
     const updateView = () => {
-        console.log(weatherData.date.getYear())
         $cityName.textContent = weatherData.cityName
         $currentDate.textContent = `${weatherData.date.getDay()} ${monthName(weatherData.date.getMonth())} ${1900+weatherData.date.getYear()}`
         $currentHour.textContent = `${weatherData.date.getHours()}u${weatherData.date.getMinutes()}`
@@ -42,7 +41,6 @@
         $currentSunDown.textContent = weatherData.sun.down
         $currentWindDirection.style.transform = `rotate(${weatherData.wind.direction}deg)`
         $currentWindSpeed.textContent = weatherData.wind.speed
-        console.log(weatherData)
     }
 
     const monthName = new Intl.DateTimeFormat("EN-UK", { month: "long" }).format;
@@ -70,8 +68,9 @@
 
     const updateData = async () => {
         weatherData.date = new Date()
-        await fetch("https://api.openweathermap.org/data/2.5/weather?q=gent&appid=64e7b66076bcafc8bd1808e4edf08fd8").then(r => r.json()).then(answer => {handleAPIData(answer)})
+        //await fetch("https://api.openweathermap.org/data/2.5/weather?q=gent&appid=64e7b66076bcafc8bd1808e4edf08fd8").then(r => r.json()).then(answer => {handleAPIData(answer)})
         updateView();
     }
+
     updateData()
 }

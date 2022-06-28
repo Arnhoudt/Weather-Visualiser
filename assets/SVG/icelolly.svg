@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 527.6 1448.44"><defs><style>.hidden{display:none}.red{fill:#fca69d;}.stick{fill:#fce36b;}.purple{fill:#9390fc;}.green{fill:#77fcb6;}</style></defs><g id="Layer_1-2">
+<rect id="stick" class="stick" x="227.01" y="700.8" width="73.59" height="747.64" rx="25" ry="25"/>
+<path class="red" d="M0,713.3H527.6v311.7c0,28.16-22.86,51.02-51.02,51.02H51.02C22.86,1076.02,0,1053.16,0,1025v-311.7H0Z"/>
+<path class="purple" d="M217.46,0h92.68c120.02,0,217.46,97.44,217.46,217.46v141.79H0V217.46C0,97.44,97.44,0,217.46,0Z"/>
+<rect class="green" y="359.25" width="527.6" height="354.19"/>
+</g>
+</svg>
