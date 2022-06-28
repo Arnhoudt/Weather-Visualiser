@@ -76,6 +76,7 @@
     }
 
     const handleAPIData = apiData => {
+        console.log(apiData)
         if(apiData["cod"] != undefined && apiData["cod"] == '404'){
             $errorLocationNotFound.classList.remove('hidden')
             return;
