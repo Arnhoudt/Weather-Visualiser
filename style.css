@@ -9,10 +9,29 @@ body{
 }
 
 #location{
-    height: 10vh;
+    padding-top: 1rem;
     text-align: center;
     border-bottom: 1px solid white;
 }
+
+#cityName, #updateLocation{
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    font-size: 1.2rem
+}
+
+#cityName{
+    color: white;
+    background: transparent;
+    border: 1px solid white;
+}
+
+#updateLocation{
+    color: #84DCFC;
+    background: white;
+    border: none;
+}
+
 #weatherData{
     padding-top: 5rem;
     text-align: left;
