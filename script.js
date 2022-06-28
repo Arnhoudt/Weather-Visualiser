@@ -9,6 +9,7 @@
     const $currentSunDown = document.getElementById('currentSunDown')
     const $currentWindDirection = document.getElementById('currentWindDirection')
     const $currentWindSpeed = document.getElementById('currentWindSpeed')
+    const $errorLocationNotFound = document.getElementById('locationNotFound')
 
     const iceLollyElements = [
         document.querySelector('.purple'),
@@ -39,7 +40,7 @@
     }
 
     const updateView = () => {
-        $cityName.textContent = weatherData.cityName
+        $cityName.value = weatherData.cityName
         $currentDate.textContent = `${weatherData.date.getDay()} ${monthName(weatherData.date.getMonth())} ${1900+weatherData.date.getYear()}`
         $currentHour.textContent = `${weatherData.date.getHours()}u${weatherData.date.getMinutes()}`
         $currentTemp.textContent = weatherData.temp
@@ -48,13 +49,11 @@
         $currentSunDown.textContent = weatherData.sun.down
         $currentWindDirection.style.transform = `rotate(${weatherData.wind.direction}deg)`
         $currentWindSpeed.textContent = weatherData.wind.speed
-        console.log(weatherData.temp)
         let partsHidden = Math.floor(weatherData.temp / 15)
         hideLollyParts(partsHidden)
     }
 
     const hideLollyParts = partsHidden => {
-        console.log(partsHidden)
         for(i = 0; i < iceLollyElements.length; i++){
             if(i < partsHidden){
                 iceLollyElements[i].classList.add("hidden")
@@ -77,7 +76,12 @@
     }
 
     const handleAPIData = apiData => {
-        console.log(apiData)
+        if(apiData["cod"] != undefined && apiData["cod"] == '404'){
+            $errorLocationNotFound.classList.remove('hidden')
+            return;
+        }
+        $errorLocationNotFound.classList.add('hidden')
+
         weatherData.cityName = apiData.name
         weatherData.temp = Math.round(convertKelvinToCelcius(apiData.main.temp))
         weatherData.status = apiData.weather[0].description
@@ -87,11 +91,16 @@
         weatherData.wind.speed = apiData.wind.speed
     }
 
-    const updateData = async () => {
+    const handleClickUpdateLocation = () =>{
+        updateData($cityName.value)
+    }
+
+    const updateData = async (location = "gent") => {
         weatherData.date = new Date()
-        await fetch("https://api.openweathermap.org/data/2.5/weather?q=gent&appid=64e7b66076bcafc8bd1808e4edf08fd8").then(r => r.json()).then(answer => {handleAPIData(answer)})
+        await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=64e7b66076bcafc8bd1808e4edf08fd8`).then(r => r.json()).then(answer => {handleAPIData(answer)})
         updateView();
     }
 
+    document.getElementById("updateLocation").addEventListener('click', handleClickUpdateLocation)
     updateData()
 }

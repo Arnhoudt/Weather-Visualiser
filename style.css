@@ -77,7 +77,11 @@ body{
     #icelollyWrapper{
         padding:0
     }
-  }
+}
+
+.error{
+    color: red;
+}
 
 .hidden{
     display: none
