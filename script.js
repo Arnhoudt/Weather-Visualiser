@@ -30,17 +30,48 @@
             "speed": "unknown"
         },
     }
+
     const updateView = () => {
+        console.log(weatherData.date.getYear())
         $cityName.textContent = weatherData.cityName
-        $currentDate.textContent = `${weatherData.day} ${weatherData.month} ${weatherData.year}`
-        $currentHour.textContent = `${weatherData.hour}u${weatherData.minute}`
+        $currentDate.textContent = `${weatherData.date.getDay()} ${monthName(weatherData.date.getMonth())} ${1900+weatherData.date.getYear()}`
+        $currentHour.textContent = `${weatherData.date.getHours()}u${weatherData.date.getMinutes()}`
         $currentTemp.textContent = weatherData.temp
         $currentStatus.textContent = weatherData.status
         $currentSunUp.textContent = weatherData.sun.up
         $currentSunDown.textContent = weatherData.sun.down
         $currentWindDirection.style.transform = `rotate(${weatherData.wind.direction}deg)`
         $currentWindSpeed.textContent = weatherData.wind.speed
+        console.log(weatherData)
     }
 
-    updateView();
+    const monthName = new Intl.DateTimeFormat("EN-UK", { month: "long" }).format;
+
+    const convertKelvinToCelcius = kelvin => {
+        return kelvin - 273.15
+    }
+
+    const timestampToHHuMM = timestamp => {
+        const pad = time => (time<10) ? '0' + time : time;
+        let date = new Date(timestamp);
+        return `${pad(date.getHours())}u${pad(date.getMinutes())}`
+    }
+
+    const handleAPIData = apiData => {
+        console.log(apiData)
+        weatherData.cityName = apiData.name
+        weatherData.temp = convertKelvinToCelcius(apiData.main.temp)
+        weatherData.status = apiData.weather[0].description
+        weatherData.sun.up = timestampToHHuMM(apiData.sys.sunrise)
+        weatherData.sun.down = timestampToHHuMM(apiData.sys.sunset)
+        weatherData.wind.direction = apiData.wind.deg
+        weatherData.wind.speed = apiData.wind.speed
+    }
+
+    const updateData = async () => {
+        weatherData.date = new Date()
+        await fetch("https://api.openweathermap.org/data/2.5/weather?q=gent&appid=64e7b66076bcafc8bd1808e4edf08fd8").then(r => r.json()).then(answer => {handleAPIData(answer)})
+        updateView();
+    }
+    updateData()
 }
